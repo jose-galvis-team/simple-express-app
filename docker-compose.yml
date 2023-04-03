@@ -4,13 +4,13 @@ services:
   db:
     image: 'postgres'
     ports:
-      - '5432:5432'
+      - '4321:5432'
     environment:
       POSTGRES_PASSWORD: '123456'
       POSTGRES_USER: 'docker'
   server:
     build: .
     ports:
-      - '3000:3000'
+      - '5000:5000'
     depends_on:
       - db

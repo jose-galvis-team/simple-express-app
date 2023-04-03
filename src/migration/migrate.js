@@ -1,10 +1,11 @@
 const db = require("../db-config");
+
 async function migrateAndSeed() {
   try {
     console.log("About to migrate and seed db with user");
     await db.raw(
-      `create table user (
-          id integer not null,
+      `create table "user" (
+          id serial,
           username varchar not null,
           password varchar not null,
           CONSTRAINT "PK_user" PRIMARY KEY (id),
@@ -12,11 +13,13 @@ async function migrateAndSeed() {
       );`
     );
     await db.raw(
-      `insert into user (id, username, password) values (1, 'dummyuser', 'pass123');`
+      `insert into "user" (username, password) values ('dummyuser', 'pass123');`
     );
+    console.log("Successfully migrated and seeded db");
   } catch (error) {
-    console.log("Error running migration", error.message);
+    console.log("Error running migration", JSON.stringify(error));
   }
+  process.exit();
 }
 
-migrateAndSeed().then(() => console.log("Successfully migrated and seeded db"));
+migrateAndSeed();
